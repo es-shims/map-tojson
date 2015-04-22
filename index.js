@@ -65,7 +65,9 @@ var mapToJSONshim = function toJSON() {
 	} else if (hasMaps && isMap(this)) {
 		iterate(this, Array.prototype.push.bind(entries));
 	} else if (hasSets && isSet(this)) {
-		iterate(this, function (value) { entries.push([entries.length, value]); });
+		Set.prototype.forEach.call(this, function (value) {
+			entries.push([value, value]);
+		});
 	} else if (ES.IsCallable(Array.from)) {
 		entries = Array.from(this);
 	} else {

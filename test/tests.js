@@ -10,8 +10,11 @@ module.exports = function (toJSON, t) {
 
 	t.test('Sets', { skip: !hasSets }, function (st) {
 		var set = new Set(); // Some engines’ native Sets can’t take an iterable
-		arr.forEach(function (v) { set.add(v); });
-		st.deepEqual(toJSON(set), arrEntries, '`new Set(iterable)` toJSONs to Array of entries');
+		var setEntries = arr.map(function (v) {
+			set.add(v);
+			return [v, v];
+		});
+		st.deepEqual(toJSON(set), setEntries, '`new Set(iterable)` toJSONs to Array of entries');
 		st.deepEqual(toJSON(new Set()), [], 'empty Set toJSONs to empty Array');
 		st.end();
 	});
