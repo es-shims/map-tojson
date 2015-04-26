@@ -3,19 +3,11 @@ var hasSets = typeof Set !== 'undefined' && isCallable(Set);
 var hasMaps = typeof Map !== 'undefined' && isCallable(Map);
 
 module.exports = function (toJSON, t) {
-	var sparseish = { length: 5, 0: 'a', 1: 'b' };
-	var overfullarrayish = { length: 2, 0: 'a', 1: 'b', 2: 'c' };
-	var arr = [1, 2, 3];
-	var arrEntries = [[0, 1], [1, 2], [2, 3]];
-
 	t.test('Sets', { skip: !hasSets }, function (st) {
 		var set = new Set(); // Some engines’ native Sets can’t take an iterable
-		var setEntries = arr.map(function (v) {
-			set.add(v);
-			return [v, v];
-		});
-		st.deepEqual(toJSON(set), setEntries, '`new Set(iterable)` toJSONs to Array of entries');
-		st.deepEqual(toJSON(new Set()), [], 'empty Set toJSONs to empty Array');
+		set.add(1);
+		set.add(2);
+		st.throws(function () { return toJSON(set); }, TypeError, 'Sets do not have a [[MapData]] internal slot');
 		st.end();
 	});
 
@@ -28,30 +20,10 @@ module.exports = function (toJSON, t) {
 		st.end();
 	});
 
-	t.test('Arrays', function (st) {
-		st.deepEqual(toJSON([]), [], 'an empty Array toJSONs to an empty Array');
-		st.deepEqual(toJSON(arr), arrEntries, 'Array toJSONs to a similar Array');
-		st.end();
-	});
-
-	t.skip('array-likes', function (st) {
-		// skipped for now. currently throws.
-		st.deepEqual(
-			toJSON(sparseish),
-			[[0, 'a'], [1, 'b'], [2, undefined], [3, undefined], [4, undefined]],
-			'sparse array-like toJSONs to dense Array'
-		);
-		st.deepEqual(
-			toJSON(overfullarrayish),
-			[[0, 'a'], [1, 'b']],
-			'array-like with extra properties toJSONs to properly lengthed Array'
-		);
-		st.end();
-	});
-
-	t.test('Strings', function (st) {
-		st.deepEqual(toJSON(''), [], 'empty string toJSONs to an empty Array');
-		st.deepEqual(toJSON('abc'), [[0, 'a'], [1, 'b'], [2, 'c']], 'string toJSONs to an Array of entries of [index, character]');
+	t.test('non-Maps', function (st) {
+		st.throws(function () { return toJSON([]); }, TypeError, 'Arrays do not have a [[MapData]] internal slot');
+		st.throws(function () { return toJSON({}); }, TypeError, 'Objects do not have a [[MapData]] internal slot');
+		st.throws(function () { return toJSON(''); }, TypeError, 'Strings do not have a [[MapData]] internal slot');
 		st.end();
 	});
 };
