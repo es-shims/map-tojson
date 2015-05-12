@@ -55,4 +55,5 @@ define(boundMapToJSON, {
 		return Map.prototype.toJSON;
 	}
 });
+
 module.exports = boundMapToJSON;
