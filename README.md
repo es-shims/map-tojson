@@ -43,7 +43,7 @@ assert.deepEqual(new Map().toJSON(), []);
 Simply clone the repo, `npm install`, and run `npm test`
 
 [1]: https://npmjs.org/package/map-tojson
-[2]: http://vb.teelaun.ch/ljharb/map-tojson.svg
+[2]: http://versionbadg.es/ljharb/map-tojson.svg
 [3]: https://travis-ci.org/ljharb/map-tojson.svg
 [4]: https://travis-ci.org/ljharb/map-tojson
 [5]: https://david-dm.org/ljharb/map-tojson.svg
