@@ -9,6 +9,7 @@ var functionsHaveNames = function f() {}.name === 'f';
 var hasMaps = typeof Map !== 'undefined' && isCallable(Map);
 
 var toJSON = require('../');
+var runTests = require('./tests');
 
 test('no Maps', { skip: hasMaps }, function (t) {
 	t.throws(toJSON.shim, TypeError, 'shim method throws when Map doesn’t exist');
@@ -36,7 +37,7 @@ test('shimmed', { skip: !hasMaps }, function (t) {
 		st.end();
 	});
 
-	require('./tests')(bind.call(Function.call, Map.prototype.toJSON), t);
+	runTests(bind.call(Function.call, Map.prototype.toJSON), t);
 
 	t.end();
 });
