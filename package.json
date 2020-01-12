@@ -2,6 +2,9 @@
 	"name": "map-tojson",
 	"version": "2.0.1",
 	"author": "Jordan Harband",
+	"funding": {
+		"url": "https://github.com/sponsors/ljharb"
+	},
 	"description": "ES7 Proposal: Map#toJSON https://github.com/DavidBruant/Map-Set.prototype.toJSON",
 	"license": "MIT",
 	"main": "index.js",
@@ -72,4 +75,3 @@
 		"node": ">= 0.4"
 	}
 }
-
