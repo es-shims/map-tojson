@@ -6,7 +6,9 @@ var define = require('define-properties');
 var hasMaps = typeof Map !== 'undefined' && ES.IsCallable(Map);
 
 var mapEntries;
-if (hasMaps) { mapEntries = Map.prototype.entries; }
+if (hasMaps) {
+	mapEntries = Map.prototype.entries;
+}
 
 // polyfilled Maps with es6-shim might exist without for..of
 var iterateWithWhile = function (map, receive) {
@@ -27,7 +29,7 @@ var iterate = (function () {
 	return iterateWithWhile;
 }());
 
-var requireMap = function requireMap() {
+var requireMap = function requireGlobalMap() {
 	if (!hasMaps) {
 		throw new TypeError('Map.prototype.toJSON requires Map (either native, or polyfilled with es6-shim)');
 	}

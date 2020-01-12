@@ -9,7 +9,7 @@ module.exports = function (toJSON, t) {
 		var set = new Set(); // Some engines’ native Sets can’t take an iterable
 		set.add(1);
 		set.add(2);
-		st.throws(function () { return toJSON(set); }, TypeError, 'Sets do not have a [[MapData]] internal slot');
+		st['throws'](function () { return toJSON(set); }, TypeError, 'Sets do not have a [[MapData]] internal slot');
 		st.end();
 	});
 
@@ -23,9 +23,9 @@ module.exports = function (toJSON, t) {
 	});
 
 	t.test('non-Maps', function (st) {
-		st.throws(function () { return toJSON([]); }, TypeError, 'Arrays do not have a [[MapData]] internal slot');
-		st.throws(function () { return toJSON({}); }, TypeError, 'Objects do not have a [[MapData]] internal slot');
-		st.throws(function () { return toJSON(''); }, TypeError, 'Strings do not have a [[MapData]] internal slot');
+		st['throws'](function () { return toJSON([]); }, TypeError, 'Arrays do not have a [[MapData]] internal slot');
+		st['throws'](function () { return toJSON({}); }, TypeError, 'Objects do not have a [[MapData]] internal slot');
+		st['throws'](function () { return toJSON(''); }, TypeError, 'Strings do not have a [[MapData]] internal slot');
 		st.end();
 	});
 };
