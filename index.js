@@ -3,32 +3,11 @@
 var IsCallable = require('es-abstract/2019/IsCallable');
 var RequireObjectCoercible = require('es-abstract/2019/RequireObjectCoercible');
 var define = require('define-properties');
+var iterate = require('iterate-value');
+var callBound = require('es-abstract/helpers/callBound');
+var $mapSize = callBound('%Map.prototype.size%', true);
 
 var hasMaps = typeof Map !== 'undefined' && IsCallable(Map);
-
-var mapEntries;
-if (hasMaps) {
-	mapEntries = Map.prototype.entries;
-}
-
-// polyfilled Maps with es6-shim might exist without for..of
-var iterateWithWhile = function (map, receive) {
-	var entries = mapEntries.call(map);
-	var next;
-	do {
-		next = entries.next();
-	} while (!next.done && receive(next.value));
-};
-
-var iterate = (function () {
-	try {
-		// Safari 8's native Map can't be iterated except with for..of
-		return Function('mapEntries', 'map', 'receive', 'for (var entry of mapEntries.call(map)) { receive(entry); }').bind(null, mapEntries);
-	} catch (e) {
-		/* for..of seems to not be supported */
-	}
-	return iterateWithWhile;
-}());
 
 var requireMap = function requireGlobalMap() {
 	if (!hasMaps) {
@@ -39,9 +18,8 @@ var requireMap = function requireGlobalMap() {
 var mapToJSONshim = function toJSON() {
 	RequireObjectCoercible(this);
 	requireMap();
-	var entries = [];
-	iterate(this, Array.prototype.push.bind(entries));
-	return entries;
+	$mapSize(this);
+	return iterate(this);
 };
 
 var boundMapToJSON = function mapToJSON(map) {
