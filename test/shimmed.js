@@ -5,7 +5,8 @@ var defineProperties = require('define-properties');
 var bind = require('function-bind');
 var isEnumerable = Object.prototype.propertyIsEnumerable;
 var isCallable = require('es-abstract/es7').IsCallable;
-var functionsHaveNames = function f() {}.name === 'f';
+var functionsHaveNames = require('functions-have-names')();
+var hasStrictMode = require('has-strict-mode')();
 var hasMaps = typeof Map !== 'undefined' && isCallable(Map);
 
 var toJSON = require('../');
@@ -29,9 +30,7 @@ test('shimmed', { skip: !hasMaps }, function (t) {
 		et.end();
 	});
 
-	var supportsStrictMode = (function () { return typeof this === 'undefined'; }());
-
-	t.test('bad array/this value', { skip: !supportsStrictMode }, function (st) {
+	t.test('bad array/this value', { skip: !hasStrictMode }, function (st) {
 		st['throws'](function () { return toJSON(undefined, 'a'); }, TypeError, 'undefined is not an object');
 		st['throws'](function () { return toJSON(null, 'a'); }, TypeError, 'null is not an object');
 		st.end();
