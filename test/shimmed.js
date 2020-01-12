@@ -2,22 +2,22 @@
 
 var test = require('tape');
 var defineProperties = require('define-properties');
-var bind = require('function-bind');
+var callBind = require('es-abstract/helpers/callBind');
 var isEnumerable = Object.prototype.propertyIsEnumerable;
-var isCallable = require('es-abstract/es7').IsCallable;
+var GetIntrinsic = require('es-abstract/GetIntrinsic');
+var $Map = GetIntrinsic('%Map%', true);
 var functionsHaveNames = require('functions-have-names')();
 var hasStrictMode = require('has-strict-mode')();
-var hasMaps = typeof Map !== 'undefined' && isCallable(Map);
 
-var toJSON = require('../');
+var toJSON = require('..');
 var runTests = require('./tests');
 
-test('no Maps', { skip: hasMaps }, function (t) {
+test('no Maps', { skip: $Map }, function (t) {
 	t['throws'](toJSON.shim, TypeError, 'shim method throws when Map doesn’t exist');
 	t.end();
 });
 
-test('shimmed', { skip: !hasMaps }, function (t) {
+test('shimmed', { skip: !$Map }, function (t) {
 	toJSON.shim();
 	t.equal(Map.prototype.toJSON.length, 0, 'Map#toJSON has the right arity');
 	t.test('Function name', { skip: !functionsHaveNames }, function (st) {
@@ -36,7 +36,7 @@ test('shimmed', { skip: !hasMaps }, function (t) {
 		st.end();
 	});
 
-	runTests(bind.call(Function.call, Map.prototype.toJSON), t);
+	runTests(callBind(Map.prototype.toJSON), t);
 
 	t.end();
 });

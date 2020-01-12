@@ -1,9 +1,10 @@
 'use strict';
 
-var ES = require('es-abstract/es7');
+var IsCallable = require('es-abstract/2019/IsCallable');
+var RequireObjectCoercible = require('es-abstract/2019/RequireObjectCoercible');
 var define = require('define-properties');
 
-var hasMaps = typeof Map !== 'undefined' && ES.IsCallable(Map);
+var hasMaps = typeof Map !== 'undefined' && IsCallable(Map);
 
 var mapEntries;
 if (hasMaps) {
@@ -36,7 +37,7 @@ var requireMap = function requireGlobalMap() {
 };
 
 var mapToJSONshim = function toJSON() {
-	ES.RequireObjectCoercible(this);
+	RequireObjectCoercible(this);
 	requireMap();
 	var entries = [];
 	iterate(this, Array.prototype.push.bind(entries));
@@ -44,7 +45,7 @@ var mapToJSONshim = function toJSON() {
 };
 
 var boundMapToJSON = function mapToJSON(map) {
-	ES.RequireObjectCoercible(map);
+	RequireObjectCoercible(map);
 	return mapToJSONshim.call(map);
 };
 define(boundMapToJSON, {
