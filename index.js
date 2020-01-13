@@ -1,40 +1,24 @@
 'use strict';
 
-var IsCallable = require('es-abstract/2019/IsCallable');
 var RequireObjectCoercible = require('es-abstract/2019/RequireObjectCoercible');
 var define = require('define-properties');
-var iterate = require('iterate-value');
-var callBound = require('es-abstract/helpers/callBound');
-var $mapSize = callBound('%Map.prototype.size%', true);
+var callBind = require('es-abstract/helpers/callBind');
 
-var hasMaps = typeof Map !== 'undefined' && IsCallable(Map);
+var getPolyfill = require('./polyfill');
+var implementation = require('./implementation');
+var shim = require('./shim');
 
-var requireMap = function requireGlobalMap() {
-	if (!hasMaps) {
-		throw new TypeError('Map.prototype.toJSON requires Map (either native, or polyfilled with es6-shim)');
-	}
-};
-
-var mapToJSONshim = function toJSON() {
-	RequireObjectCoercible(this);
-	requireMap();
-	$mapSize(this);
-	return iterate(this);
-};
+var bound = callBind(getPolyfill());
 
 var boundMapToJSON = function mapToJSON(map) {
 	RequireObjectCoercible(map);
-	return mapToJSONshim.call(map);
+	return bound(map);
 };
 define(boundMapToJSON, {
-	method: mapToJSONshim,
-	shim: function shimMapPrototypeToJSON() {
-		requireMap();
-		define(Map.prototype, {
-			toJSON: mapToJSONshim
-		});
-		return Map.prototype.toJSON;
-	}
+	getPolyfill: getPolyfill,
+	implementation: implementation,
+	method: implementation, // TODO: remove at semver-major
+	shim: shim
 });
 
 module.exports = boundMapToJSON;
