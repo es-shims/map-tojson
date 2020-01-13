@@ -8,9 +8,7 @@
 
 [![npm badge][11]][1]
 
-[![browser support][9]][10]
-
-ES7 Proposal: Map#toJSON https://github.com/DavidBruant/Map-Set.prototype.toJSON
+Rejected ESNext Proposal: Map#toJSON https://github.com/DavidBruant/Map-Set.prototype.toJSON
 
 This polyfill is spec-compliant (based on the spec so far).
 It will work in every engine in which Map exists natively, or where it is polyfilled with the (es6-shim)[es6-shim-url]
@@ -43,15 +41,13 @@ assert.deepEqual(new Map().toJSON(), []);
 Simply clone the repo, `npm install`, and run `npm test`
 
 [1]: https://npmjs.org/package/map-tojson
-[2]: http://versionbadg.es/ljharb/map-tojson.svg
-[3]: https://travis-ci.org/ljharb/map-tojson.svg
-[4]: https://travis-ci.org/ljharb/map-tojson
-[5]: https://david-dm.org/ljharb/map-tojson.svg
-[6]: https://david-dm.org/ljharb/map-tojson
-[7]: https://david-dm.org/ljharb/map-tojson/dev-status.svg
-[8]: https://david-dm.org/ljharb/map-tojson#info=devDependencies
-[9]: https://ci.testling.com/ljharb/map-tojson.png
-[10]: https://ci.testling.com/ljharb/map-tojson
+[2]: http://versionbadg.es/es-shims/map-tojson.svg
+[3]: https://travis-ci.org/es-shims/map-tojson.svg
+[4]: https://travis-ci.org/es-shims/map-tojson
+[5]: https://david-dm.org/es-shims/map-tojson.svg
+[6]: https://david-dm.org/es-shims/map-tojson
+[7]: https://david-dm.org/es-shims/map-tojson/dev-status.svg
+[8]: https://david-dm.org/es-shims/map-tojson#info=devDependencies
 [11]: https://nodei.co/npm/map-tojson.png?downloads=true&stars=true
 [license-image]: http://img.shields.io/npm/l/map-tojson.svg
 [license-url]: LICENSE
