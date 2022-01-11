@@ -18,7 +18,7 @@ test('no Maps', { skip: $Map }, function (t) {
 });
 
 test('shimmed', { skip: !$Map }, function (t) {
-	toJSON.shim();
+	require('../auto'); // eslint-disable-line global-require
 	t.equal(Map.prototype.toJSON.length, 0, 'Map#toJSON has the right arity');
 	t.test('Function name', { skip: !functionsHaveNames }, function (st) {
 		st.equal(Map.prototype.toJSON.name, 'toJSON', 'Map#toJSON has name "toJSON"');
