@@ -1,8 +1,8 @@
 'use strict';
 
-var RequireObjectCoercible = require('es-abstract/2019/RequireObjectCoercible');
+var RequireObjectCoercible = require('es-abstract/2021/RequireObjectCoercible');
 var define = require('define-properties');
-var callBind = require('es-abstract/helpers/callBind');
+var callBind = require('call-bind');
 
 var getPolyfill = require('./polyfill');
 var implementation = require('./implementation');
