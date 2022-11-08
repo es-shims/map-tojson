@@ -1,6 +1,6 @@
 'use strict';
 
-var RequireObjectCoercible = require('es-abstract/2021/RequireObjectCoercible');
+var RequireObjectCoercible = require('es-abstract/2022/RequireObjectCoercible');
 var iterate = require('iterate-value');
 var callBound = require('call-bind/callBound');
 var $mapSize = callBound('%Map.prototype.size%', true);

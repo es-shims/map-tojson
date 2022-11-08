@@ -1,6 +1,6 @@
 'use strict';
 
-var RequireObjectCoercible = require('es-abstract/2021/RequireObjectCoercible');
+var RequireObjectCoercible = require('es-abstract/2022/RequireObjectCoercible');
 var define = require('define-properties');
 var callBind = require('call-bind');
 
